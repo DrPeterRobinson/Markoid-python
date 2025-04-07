@@ -1,0 +1,39 @@
+body {
+    font-size:1rem;
+}
+
+.form-control{
+    padding:4px;
+}
+
+.tablex {
+    table-layout: auto;
+    font-size:0.8rem;
+    width:100%;
+}
+
+.item {
+    font-size:0.8rem;
+    width:100%;
+}
+
+.bg-success{
+    background-color:#7fd5e2!important;
+}
+
+.item-editable{
+    background-color:#efe0ba;
+}
+
+.mainform{
+    height: 100vh;
+}
+
+.itemssection{
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.summary{
+    height:20vh;
+}
