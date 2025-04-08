@@ -22,9 +22,20 @@
   <body>
 
 
-    <button id="test-open-file" class="btn btn-primary" id="btn-test">Load data file</button>
 
     <div class=" container-fluid">
+      <div class="row header">
+        <div class="col-sm-2">
+          <button id="test-open-file" class="btn btn-primary" id="btn-test">Load data file</button>
+        </div>
+        <div class="col-sm-8">
+          <input class="form-control sm" id="ip-filename" name="filename" placeholder="File name" >
+          <select class="form-control sm" id="student-dropdown" name="student" ></select> 
+        </div>
+        <div class="col-sm-2">
+          <button id="btn-send-md" class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right"></i></button>
+          <button id="btn-send-pdf" class="btn btn-sm btn-outline-primary"><i class="bi bi-file-pdf"></i></button>
+        </div>
 
       <!--<div class="pre-scrollable" style="max-height:80vh">-->
       <div class="itemssection">
@@ -46,8 +57,8 @@
               <input class="form-control sm" id="ip-studentname" name="studentname" >
             </div>
             <div class="col-sm-2">
-              <button id="btn-send-md" class="btn btn-sm btn-outline-primary"><i class="bi bi-save"></i></button>
-              <button id="btn-send" class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right"></i></button>
+              <button id="xbtn-send-md" class="btn btn-sm btn-outline-primary"><i class="bi bi-save"></i></button>
+              <button id="xbtn-send" class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right"></i></button>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ window.addEventListener('pywebviewready', function() {
   //var container = document.getElementById('pywebview-status')
   //container.innerHTML = '<i>pywebview</i> is ready'
   getLines();
+  getStudents();
 })
 
 $(function(){
@@ -47,7 +48,7 @@ function createRow(text,id){
 }
 
 function getLines(){
-  lines = pywebview.api.get_lines().then(function(lines) {
+  var lines = pywebview.api.get_lines().then(function(lines) {
     var table = $("#table1");
     table.empty();
     maxIndex=0;
@@ -58,6 +59,17 @@ function getLines(){
     for (var i=0;i<lines.length;i++){
         table.append(createRow(lines[i],"item"+maxIndex));
         maxIndex++;
+    }
+  });
+}
+
+function getStudents(){
+  console.log("Getting student list");
+  var students = pywebview.api.get_student_list().then(function(students) {
+    var dropdown = $("#student-dropdown");
+    dropdown.empty();
+    for (var i=0;i<students.length;i++){
+      dropdown.append('<option value="'+students[i]+'">'+students[i]+'</option>');
     }
   });
 }
@@ -242,4 +254,28 @@ $('#btn-send').on('click',function(e){
 $('#btn-send-md').on('click',function(e){
   sendDataMarkDown();
 })
+
+$('#btn-send-md').on('click',function(e){
+  sendDataMarkDown();
+})
+
+function sendDataMarkDown(){
+  var text = $("#summary").text();
+  var student = $("#student-dropdown").val();
+  pywebview.api.write_results(student,text).then(function(result){
+    console.log("Sent data: "+result);
+  });
+}
+
+$('#btn-send-pdf').on('click',function(e){
+  makePDF();
+})
+
+function makePDF(){
+  var student = $("#student-dropdown").val();
+  pywebview.api.makePDF(student).then(function(result){
+    console.log("Made pdf: "+result);
+  });
+}
+
 
