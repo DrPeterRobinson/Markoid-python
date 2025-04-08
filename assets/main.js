@@ -1,28 +1,15 @@
 let maxIndex=0;
 
 window.addEventListener('pywebviewready', function() {
-  var container = document.getElementById('pywebview-status')
-  container.innerHTML = '<i>pywebview</i> is ready'
+  //var container = document.getElementById('pywebview-status')
+  //container.innerHTML = '<i>pywebview</i> is ready'
+  getLines();
 })
 
 $(function(){
-
-
   $("#test-open-file").click(function(){
      openFile();
   });
-
-  // This is here so that the user receives a request for permission to access the clipboard
-// when the page loads. This is required for Firefox, and is a good idea for other browsers too.
-  //alert("Requesting permission to access the clipboard.");
-  //navigator.clipboard.readText();
-  let text="test";
-  $("#table1").append(createRow(text,"item"+maxIndex));
-  maxIndex++;  
-  text="test2";
-  $("#table1").append(createRow(text,"item"+maxIndex));
-  maxIndex++;  
-
 
 });
 
@@ -57,6 +44,22 @@ function createRow(text,id){
   updateInteraction(row);
 
   return row;
+}
+
+function getLines(){
+  lines = pywebview.api.get_lines().then(function(lines) {
+    var table = $("#table1");
+    table.empty();
+    maxIndex=0;
+    if (lines.length==0){
+      $("#table1").append(createRow("Dummy line","item"+maxIndex));
+      maxIndex++;  
+    }    
+    for (var i=0;i<lines.length;i++){
+        table.append(createRow(lines[i],"item"+maxIndex));
+        maxIndex++;
+    }
+  });
 }
 
 function openFile() {

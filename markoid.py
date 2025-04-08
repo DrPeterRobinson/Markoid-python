@@ -1,11 +1,39 @@
 import random
 import sys
-import threading
-import time
+import os
 import pyperclip
 import webview
+import platformdirs
+import configparser
 
 class Api:
+
+    def __init__(self):
+        app_name = 'Markoid'
+        app_author = 'DrPeterRobinson'
+        config_dir = platformdirs.user_config_dir(app_name, app_author)
+        if not os.path.exists(config_dir):
+            os.makedirs(config_dir)
+        self.config_dir = config_dir
+        self.config_file = os.path.join(self.config_dir, 'config.ini')
+        self.lines = []
+        if os.path.exists(self.config_file):
+            self.read_config()
+            self.read_data()
+        else:
+            self.file_path = None
+
+    def read_config(self):
+        config = configparser.ConfigParser()
+        config.read(self.config_file)
+        self.file_path = config.get('DEFAULT', 'file_path', fallback=None)
+        return config
+    
+    def write_config(self):
+        config = configparser.ConfigParser()
+        config['DEFAULT'] = {'file_path': self.file_path}
+        with open(self.config_file, 'w') as configfile:
+            config.write(configfile)
 
     def init(self):
         response = {'message': 'Hello from Python {0}'.format(sys.version)}
@@ -19,10 +47,6 @@ class Api:
         }
         return response
 
-    def sayHelloTo(self, name):
-        response = {'message': 'Hello {0}!'.format(name)}
-        return response
-
     def error(self):
         raise Exception('This is a Python exception')
     
@@ -33,17 +57,19 @@ class Api:
             webview.OPEN_DIALOG, allow_multiple=False, file_types=file_types
         )
         self.file_path= result[0]
-        print(self.file_path)
+        return self.read_data()
+    
+    def read_data(self):
+        if self.file_path is None:
+            return []
         with open(self.file_path, 'r', encoding='utf-8') as file:
             content = file.read()
-            lines = content.split('\n')
-        print(lines)
-        return lines
+            self.lines = content.split('\n')
+        return self.lines
 
     def saveFile(self, lines):
         if self.file_path is None:
             file_types = ('Text Files (*.txt)', 'All files (*.*)')
-
             result = window.create_file_dialog(
                 webview.OPEN_DIALOG, allow_multiple=False, file_types=file_types
             )
@@ -51,10 +77,14 @@ class Api:
         with open(self.file_path, 'w', encoding='utf-8') as file:
             content = '\n'.join(lines)
             file.write(content)
+        self.write_config()
 
     def copyToClipboard(self, text):
         pyperclip.copy(text)
         return {'message': 'Text copied to clipboard!'} 
+    
+    def get_lines(self):
+        return self.lines
         
 
 if __name__ == '__main__':
