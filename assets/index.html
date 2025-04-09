@@ -20,54 +20,32 @@
   </head>
 
   <body>
-
-
-
-      <div class="h2">
-          <select class="form-control sm" id="student-dropdown" name="student" ></select> 
-      </div>
-      <hr>
-
-      <!--
-      <div class="col-sm-8">
-          <select class="form-control sm" id="student-dropdown" name="student" ></select> 
-        </div>
-        <div class="col-sm-4"></div>
-          <button id="btn-send-md" class="btn btn-sm btn-outline-warning"><i class="bi bi-arrow-right"></i></button>
-          <button id="btn-send-pdf" class="btn btn-sm btn-outline-warning"><i class="bi bi-file-pdf"></i></button>
-        </div>
-      -->
-
       <!--<div class="pre-scrollable" style="max-height:80vh">-->
         <div class=" container-fluid">
-          <div class="itemssection">
-        <table id="tablex" class="table table-sm tablex">
-          <tbody id="table1">
+          <div class="headersection">
+            <span>Student:</span><select class="xform-control sm" id="student-dropdown" name="student" ></select> 
+        </div>
+            <div class="itemssection">
+            <table id="tablex" class="table table-sm tablex">
+              <tbody id="table1">
+              </tbody>
+            </table>
+          </div>
 
-          </tbody>
-        </table>
-      </div>
-
-      <div class="summary">
-        <div class="card-header">
-          <div class="form-group row">
-            <div class="col-sm-2">
-              <button id="btn-copy" class="btn btn-sm btn-outline-primary"><i class="bi bi-plus"></i></button>
-              <button id="btn-clear" class="btn btn-sm btn-outline-primary"><i  class="bi bi-trash"></i></button>
-            </div>
-            <div class="col-sm-6">
-              <input class="form-control sm" id="ip-studentname" name="studentname" >
-            </div>
-            <div class="col-sm-2">
-              <button id="xbtn-send-md" class="btn btn-sm btn-outline-primary"><i class="bi bi-save"></i></button>
-              <button id="xbtn-send" class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right"></i></button>
+          <div class="summary">
+            <div class="form-group row">
+              <div class="col-sm-9">
+                <div id="summary" class="finaltext" style="white-space: pre-line"></div>
+              </div>
+              <div class="col-sm-3">
+                <button id="btn-copy" class="btn btn-sm btn-outline-primary"><i class="bi bi-copy"></i></button>
+                <button id="btn-send-md" class="btn btn-sm btn-outline-warning"><i class="bi bi-save"></i></button>
+                <button id="btn-send-pdf" class="btn btn-sm btn-outline-warning"><i class="bi-file-pdf"></i></button>
+                <button id="btn-clear" class="btn btn-sm btn-outline-danger"><i  class="bi bi-trash"></i></button>
+              </div>
             </div>
           </div>
-        </div>
   
-        <div class="card-body">
-          <div id="summary" style="white-space: pre-line"></div>
-        </div>
       </div>
   
     </div>

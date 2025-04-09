@@ -6,7 +6,7 @@ import webview
 import webview.menu as wm
 import platformdirs
 import configparser
-from markdown_pdf import MarkdownPdf
+from markdown_pdf import MarkdownPdf, Section
 
 class Api:
     def __init__(self):
@@ -61,7 +61,9 @@ class Api:
             if file.endswith('.'+self.report_type):
                 student_list.append(file[:-len('.'+self.report_type)])
         print(f'Students: {student_list}')
+        student_list.sort()
         return student_list
+        
 
     def init(self):
         response = {'message': 'Hello from Python {0}'.format(sys.version)}
@@ -139,12 +141,20 @@ class Api:
         if self.report_path is None:
             return {'message': 'No report path set!'}
         target_file = os.path.join(self.report_path, student + '.' + self.report_type)
+        with open(target_file, 'r', encoding='utf-8') as file:
+            content = file.read()
         if not os.path.exists(self.report_path):
             os.makedirs(self.report_path)
         pdf_file = os.path.join(self.report_path, student + '.pdf')
-        pdf = MarkdownPDF()
-        pdf.convert(target_file, pdf_file)
-        return {pdf_file}
+
+        print('creating pdf')
+        pdf = MarkdownPdf()
+        print('creating section')
+        pdf.add_section(Section(content))
+        print('saving pdf')
+        pdf.save(pdf_file)
+        print('done')
+        return pdf_file
 
 def open_file():
     api.openFile()

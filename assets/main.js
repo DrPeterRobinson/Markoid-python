@@ -257,8 +257,8 @@ $('#btn-send-md').on('click',function(e){
   sendDataMarkDown();
 })
 
-$('#btn-send-md').on('click',function(e){
-  sendDataMarkDown();
+$('#btn-send-pdf').on('click',function(e){
+  makePdf();
 })
 
 function sendDataMarkDown(){
@@ -269,13 +269,9 @@ function sendDataMarkDown(){
   });
 }
 
-$('#btn-send-pdf').on('click',function(e){
-  makePDF();
-})
-
-function makePDF(){
+function makePdf(){
   var student = $("#student-dropdown").val();
-  pywebview.api.makePDF(student).then(function(result){
+  pywebview.api.make_pdf(student).then(function(result){
     console.log("Made pdf: "+result);
   });
 }
