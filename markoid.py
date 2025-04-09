@@ -3,9 +3,10 @@ import sys
 import os
 import pyperclip
 import webview
+import webview.menu as wm
 import platformdirs
 import configparser
-from markdown_pdf import MarkdownPDF
+from markdown_pdf import MarkdownPdf
 
 class Api:
     def __init__(self):
@@ -17,6 +18,8 @@ class Api:
         self.config_dir = config_dir
         self.config_file = os.path.join(self.config_dir, 'config.ini')
         self.lines = []
+        self.report_path=None
+        self.report_type='md'
         if os.path.exists(self.config_file):
             self.read_config()
             self.read_data()
@@ -34,6 +37,9 @@ class Api:
     
     def write_config(self):
         config = configparser.ConfigParser()
+        if self.report_path is None:
+            self.report_path=os.path.split(self.file_path)[0]
+
         config['DEFAULT'] = {
             'file_path': self.file_path,
             'report_path': self.report_path,
@@ -139,7 +145,19 @@ class Api:
         pdf = MarkdownPDF()
         pdf.convert(target_file, pdf_file)
         return {pdf_file}
-       
+
+def open_file():
+    api.openFile()
+
+def set_report_folder():
+    api.setReportFolder()
+
+def set_report_text():
+    api.WriteResults()
+
+def make_pdf():
+    api.make_pdf()
+
 
 if __name__ == '__main__':
     api = Api()
@@ -148,4 +166,22 @@ if __name__ == '__main__':
     #    html = file.read()
 
     window = webview.create_window(api.windowTitle, 'assets/index.html', js_api=api)
-    webview.start(debug=False)
+
+    menu_items = [
+        wm.Menu(
+            '&File',
+            [
+                wm.MenuAction('Load text file',open_file),
+                wm.MenuAction('Set student folder',set_report_folder),
+            ]
+        ),
+        wm.Menu(
+            '&Output',
+            [
+                wm.MenuAction('Set report text',set_report_text),
+                wm.MenuAction('Export to pdf',make_pdf),
+            ]
+        )
+    ] 
+
+    webview.start(debug=False,menu=menu_items)

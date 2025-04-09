@@ -3,7 +3,7 @@ body {
 }
 
 .form-control{
-    padding:4px;
+    padding:2px;
 }
 
 .tablex {
@@ -22,11 +22,11 @@ body {
 }
 
 .item-editable{
-    background-color:#efe0ba;
+    background-color:#f5cc64;
 }
 
 .mainform{
-    height: 100vh;
+    height: 200vh;
 }
 
 .itemssection{

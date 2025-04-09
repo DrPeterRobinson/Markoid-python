@@ -139,10 +139,12 @@ function updateInteraction(row){
       var target ="#"+$(this).attr('data-val');
       if($(target).prop("readonly")){
           $(target).prop('readonly',false);
+          $(target).addClass('item-editable');
       }
       else
       {
           $(target).prop('readonly',true);
+          $(target).removeClass('item-editable');
           updateSummary();
           saveFile();
       }

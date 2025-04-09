@@ -5,3 +5,4 @@ Cheese is good, though it can smell a bit.
 Coffee washes it down nicely.
 Foo!
 spim
+Some things are good!
