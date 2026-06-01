@@ -7,12 +7,14 @@ import webview.menu as wm
 import platformdirs
 import configparser
 from markdown_pdf import MarkdownPdf, Section
+from icecream import ic
 
 class Api:
     def __init__(self):
         app_name = 'Markoid'
         app_author = 'DrPeterRobinson'
         config_dir = platformdirs.user_config_dir(app_name, app_author)
+        ic(config_dir)
         if not os.path.exists(config_dir):
             os.makedirs(config_dir)
         self.config_dir = config_dir
@@ -134,6 +136,13 @@ class Api:
         content = content.replace('<!-- Markoid -->', text )
         with open(target_file, 'w', encoding='utf-8') as file:
             file.write(content)
+
+        summary_file = os.path.join(self.report_path, 'comments.' + self.report_type)
+        with open(summary_file, 'a', encoding='utf-8') as file:
+            file.write(f'\n\n## {student}\n\n')
+            file.write(text)
+
+
         return {'message': 'Results written to file!'}
     
     def make_pdf(self, student):
